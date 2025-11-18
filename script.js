@@ -16,7 +16,7 @@ const log = (...args) => console.log("[REPORTES]", ...args);
 // CONFIGURACIÓN
 // =========================
 const APPS_SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbzOX28EgFOTVXGFML_4R4C_GCYoG0S6QSXn22I30GmCMnZJyBBRY3qlEyM2RBqzwMJg/exec";
+  "https://script.google.com/macros/s/AKfycbyUofWXk3BYdeQrOLv72YSPF0H-TMbPZI0H9himgKB2GpzJ8BGZhJVQsb_M0XzhLs5K/exec";
 
 // =========================
 // FIRMA DIGITAL
