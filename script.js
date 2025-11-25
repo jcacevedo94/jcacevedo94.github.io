@@ -16,7 +16,7 @@ const log = (...args) => console.log("[REPORTES]", ...args);
 // CONFIGURACIÓN
 // =========================
 const APPS_SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbyUofWXk3BYdeQrOLv72YSPF0H-TMbPZI0H9himgKB2GpzJ8BGZhJVQsb_M0XzhLs5K/exec";
+  "https://script.google.com/macros/s/AKfycbx42uv42jJ_LPaMSFyukRzPyupr9aHixMyMQeIStatVCbJ3pU24Fn3NG1eP1A5lWfmZPQ/exec";
 
 // =========================
 // FIRMA DIGITAL
@@ -299,10 +299,12 @@ async function enviarPDF(pdfDoc, filename, destino, data) {
       `
     };
 
+    const form = new FormData();
+    form.append("data", JSON.stringify(payload));
+
     const res = await fetch(APPS_SCRIPT_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
+    method: "POST",
+    body: form
     });
 
     const text = await res.text();
