@@ -1,88 +1,286 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Reporte Técnico SAC</title>
   <link rel="stylesheet" href="style.css">
-  <title>Reporte de Trabajo — Envío Único</title>
   <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 </head>
+
 <body>
-  <header>
-    <h1>Orden de servicio SAC</h1>
-  </header>
 
-  <div class="wrap">
-    <form id="reporteForm" class="grid" autocomplete="on">
-      <section class="card">
-        <h2>Datos del Cliente</h2>
-        <div class="row row-2">
-          <div>
-            <label>Nombre del cliente *</label>
-            <input type="text" name="cliente_nombre" required />
-          </div>
-          <div>
-            <label>Correo del cliente *</label>
-            <input type="email" name="cliente_email" required />
-          </div>
-        </div>
+<header>
+  <h1>Reporte Técnico SAC</h1>
+</header>
 
-        <div class="row row-2">
-          <div>
-            <label>Teléfono</label>
-            <input type="tel" name="cliente_telefono" />
-          </div>
-          <div>
-            <label>Dirección</label>
-            <input type="text" name="cliente_direccion" />
-          </div>
-        </div>
+<div class="wrap">
+<form id="reporteForm" class="grid">
 
-        <div class="divider"></div>
+  <!-- DATOS DEL CLIENTE -->
+  <section class="card full-width">
+    <h2>Datos del Cliente</h2>
 
-        <h2>Datos de la Máquina</h2>
-        <div class="row row-3">
-          <div><label>Marca</label><input type="text" name="maq_marca" /></div>
-          <div><label>Modelo</label><input type="text" name="maq_modelo" /></div>
-          <div><label>Nº Serie</label><input type="text" name="maq_serie" /></div>
-        </div>
+    <div class="row row-2">
+      <div>
+        <label>Nombre de Empresa *</label>
+        <input type="text" name="cliente_empresa" required>
+      </div>
+      <div>
+        <label>Persona Encargada *</label>
+        <input type="text" name="cliente_encargado" required>
+      </div>
+    </div>
 
-        <div class="row row-2">
-          <div><label>Fecha *</label><input type="date" name="fecha" required /></div>
-          <div><label>Nº de reporte *</label><input type="text" name="reporte_num" required /></div>
-        </div>
+    <div class="row row-2">
+      <div>
+        <label>Dirección *</label>
+        <input type="text" name="cliente_direccion" required>
+      </div>
+      <div>
+        <label>Fecha *</label>
+        <input type="date" name="fecha" required>
+      </div>
+    </div>
 
-        <label>Notas / Trabajo realizado</label>
-        <textarea name="notas" placeholder="Describa el trabajo..."></textarea>
-      </section>
+    <div class="row row-2">
+      <div>
+        <label>Correo *</label>
+        <input type="email" name="cliente_email" required>
+      </div>
+      <div>
+        <label>Teléfono</label>
+        <input type="tel" name="cliente_telefono">
+      </div>
+    </div>
+  </section>
 
-      <section class="card">
-        <h2>Firma del cliente</h2>
-        <div class="sig-box"><canvas id="signature"></canvas></div>
-        <div class="actions">
-          <button type="button" class="btn-secondary" id="sig-clear">Borrar</button>
-          <button type="button" class="btn-warning" id="sig-undo">Deshacer</button>
-        </div>
+  <!-- TIPO DE SERVICIO -->
+  <section class="card full-width">
+    <h2>Tipo de Servicio</h2>
+    <div class="actions" style="flex-wrap:wrap;">
+      <button type="button" class="btn-secondary tab-btn" data-tab="preventivo">Preventivo</button>
+      <button type="button" class="btn-secondary tab-btn" data-tab="correctivo">Correctivo</button>
+      <button type="button" class="btn-secondary tab-btn" data-tab="diagnostico">Diagnóstico</button>
+      <button type="button" class="btn-secondary tab-btn" data-tab="suministros">Suministros</button>
+    </div>
+    <input type="hidden" id="tipo_servicio" name="tipo_servicio">
+  </section>
 
-        <div class="divider"></div>
+  <!-- DATOS GENERALES MÁQUINA -->
+  <section class="card full-width">
+    <h2>Datos Generales de la Máquina</h2>
 
-        <h2>Fotografías</h2>
-        <label for="fotos">Adjuntar fotos (Máx. 8)</label>
-        <input id="fotos" type="file" accept="image/*" multiple />
-        <div class="thumbs" id="thumbs"></div>
-      </section>
+    <div class="row row-2">
+      <div>
+        <label>Tipo</label>
+        <input type="text" name="maq_tipo">
+      </div>
+      <div>
+        <label>Marca</label>
+        <input type="text" name="maq_marca">
+      </div>
+    </div>
 
-      <section class="card full-width">
-        <div class="actions">
-          <button type="button" id="btn-enviar" class="btn-success" style="width:100%; padding:16px; font-size:18px;">
-            📤 Generar PDF y Enviar
-          </button>
-        </div>
-        <div id="status" class="toast"></div>
-      </section>
-    </form>
+    <div class="row row-2">
+      <div>
+        <label>Modelo</label>
+        <input type="text" name="maq_modelo">
+      </div>
+      <div>
+        <label>Serial</label>
+        <input type="text" name="maq_serial">
+      </div>
+    </div>
+
+    <div class="row row-2">
+      <div>
+        <label>Año</label>
+        <input type="number" name="maq_ano">
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOQUES TÉCNICOS POR TIPO DE SERVICIO -->
+
+  <!-- PREVENTIVO -->
+  <div id="tab-preventivo" class="tab-block hidden">
+    <h3>Mantenimiento Preventivo</h3>
+
+    <h4>Lecturas</h4>
+    <div class="row row-3">
+      <div><label>Presión</label><input type="number" name="prev_presion"></div>
+      <div><label>Temperatura</label><input type="number" name="prev_temp"></div>
+      <div><label>Voltaje</label><input type="number" name="prev_voltaje"></div>
+    </div>
+    <div class="row row-3">
+      <div><label>Corriente</label><input type="number" name="prev_corriente"></div>
+      <div><label>RPM</label><input type="number" name="prev_rpm"></div>
+      <div><label>Horas Totales</label><input type="number" name="prev_hrs_tot"></div>
+    </div>
+    <div class="row row-2">
+      <div><label>Horas en carga</label><input type="number" name="prev_hrs_carga"></div>
+    </div>
+
+    <h4>Componentes reemplazados</h4>
+    <div class="check-list">
+      <label><input type="checkbox" name="prev_filtro_aire"> Filtro aire</label>
+      <label><input type="checkbox" name="prev_filtro_aceite"> Filtro aceite</label>
+      <label><input type="checkbox" name="prev_filtro_separador"> Filtro separador</label>
+      <label><input type="checkbox" name="prev_aceite"> Aceite</label>
+      <label><input type="checkbox" name="prev_grasa"> Grasa</label>
+      <label><input type="checkbox" name="prev_rodamientos"> Rodamientos</label>
+      <label><input type="checkbox" name="prev_valvulas"> Válvulas</label>
+      <label><input type="checkbox" name="prev_mangueras"> Mangueras</label>
+      <label><input type="checkbox" name="prev_electricos"> Eléctricos</label>
+      <label><input type="checkbox" name="prev_electronicos"> Electrónicos</label>
+    </div>
+
+    <h4>Notas adicionales</h4>
+    <textarea name="prev_notas"></textarea>
   </div>
 
-  <script src="script.js"></script>
+  <!-- CORRECTIVO -->
+  <div id="tab-correctivo" class="tab-block hidden">
+    <h3>Mantenimiento Correctivo</h3>
+
+    <h4>Lecturas</h4>
+    <div class="row row-3">
+      <div><label>Presión</label><input type="number" name="corr_presion"></div>
+      <div><label>Temperatura</label><input type="number" name="corr_temp"></div>
+      <div><label>Voltaje</label><input type="number" name="corr_voltaje"></div>
+    </div>
+    <div class="row row-3">
+      <div><label>Corriente</label><input type="number" name="corr_corriente"></div>
+      <div><label>RPM</label><input type="number" name="corr_rpm"></div>
+      <div><label>Horas Totales</label><input type="number" name="corr_hrs_tot"></div>
+    </div>
+
+    <h4>Falla reportada</h4>
+    <textarea name="corr_falla"></textarea>
+
+    <h4>Reparación realizada</h4>
+    <textarea name="corr_reparacion"></textarea>
+
+    <h4>Componentes reemplazados</h4>
+    <div class="check-list">
+      <label><input type="checkbox" name="corr_filtro_aire"> Filtro aire</label>
+      <label><input type="checkbox" name="corr_filtro_aceite"> Filtro aceite</label>
+      <label><input type="checkbox" name="corr_filtro_separador"> Filtro separador</label>
+      <label><input type="checkbox" name="corr_aceite"> Aceite</label>
+      <label><input type="checkbox" name="corr_grasa"> Grasa</label>
+      <label><input type="checkbox" name="corr_rodamientos"> Rodamientos</label>
+      <label><input type="checkbox" name="corr_mangueras"> Mangueras</label>
+      <label><input type="checkbox" name="corr_valvulas"> Válvulas</label>
+      <label><input type="checkbox" name="corr_electricos"> Eléctricos</label>
+      <label><input type="checkbox" name="corr_electronicos"> Electrónicos</label>
+    </div>
+
+    <h4>Detalles específicos</h4>
+    <label>Válvulas reemplazadas</label>
+    <input type="text" name="corr_valvulas_det">
+
+    <label>Mangueras reemplazadas</label>
+    <input type="text" name="corr_mangueras_det">
+
+    <label>Componentes eléctricos reemplazados</label>
+    <textarea name="corr_electricos_det"></textarea>
+
+    <label>Componentes electrónicos reemplazados</label>
+    <textarea name="corr_electronicos_det"></textarea>
+
+    <h4>Notas</h4>
+    <textarea name="corr_notas"></textarea>
+  </div>
+
+  <!-- DIAGNOSTICO -->
+  <div id="tab-diagnostico" class="tab-block hidden">
+    <h3>Diagnóstico</h3>
+
+    <h4>Lecturas</h4>
+    <div class="row row-3">
+      <div><label>Presión</label><input type="number" name="diag_presion"></div>
+      <div><label>Temperatura</label><input type="number" name="diag_temp"></div>
+      <div><label>Voltaje</label><input type="number" name="diag_voltaje"></div>
+    </div>
+    <div class="row row-3">
+      <div><label>Corriente</label><input type="number" name="diag_corriente"></div>
+      <div><label>RPM</label><input type="number" name="diag_rpm"></div>
+      <div><label>Horas Totales</label><input type="number" name="diag_hrs_tot"></div>
+    </div>
+
+    <h4>Diagnóstico</h4>
+    <textarea name="diag_descripcion"></textarea>
+
+    <h4>Recomendaciones</h4>
+    <textarea name="diag_recomendaciones"></textarea>
+  </div>
+
+  <!-- SUMINISTROS -->
+  <div id="tab-suministros" class="tab-block hidden">
+    <h3>Suministros</h3>
+    <div class="check-list">
+      <label><input type="checkbox" name="sum_filtro_aire"> Filtro aire</label>
+      <label><input type="checkbox" name="sum_filtro_aceite"> Filtro aceite</label>
+      <label><input type="checkbox" name="sum_filtro_separador"> Filtro separador</label>
+      <label><input type="checkbox" name="sum_aceite"> Aceite</label>
+      <label><input type="checkbox" name="sum_valvulas"> Válvulas</label>
+      <label><input type="checkbox" name="sum_prefiltros"> Prefiltros</label>
+      <label><input type="checkbox" name="sum_tuberia"> Tubería</label>
+      <label><input type="checkbox" name="sum_electricos"> Eléctricos</label>
+      <label><input type="checkbox" name="sum_electronicos"> Electrónicos</label>
+    </div>
+
+    <h4>Notas</h4>
+    <textarea name="sum_notas"></textarea>
+  </div>
+
+  <!-- FOTOGRAFÍAS -->
+  <section class="card full-width">
+    <h2>Fotografías</h2>
+    <input type="file" id="fotos" multiple accept="image/*"/>
+    <div id="thumbs"></div>
+  </section>
+
+  <!-- FIRMA -->
+  <section class="card full-width">
+    <h2>Firma del Cliente</h2>
+    <div class="sig-box">
+      <canvas id="signature"></canvas>
+    </div>
+    <div class="actions">
+      <button type="button" id="sig-clear" class="btn-secondary">Borrar</button>
+      <button type="button" id="sig-undo" class="btn-warning">Deshacer</button>
+    </div>
+  </section>
+
+  <!-- TECNICO -->
+  <section class="card full-width">
+    <h2>Técnico Responsable</h2>
+    <select name="tecnico" required>
+      <option value="" disabled selected>Seleccionar técnico</option>
+      <option>Juan Acevedo</option>
+      <option>Carlos Pérez</option>
+      <option>Andrés Rodríguez</option>
+      <option>Víctor Melo</option>
+      <option>Manuel Gómez</option>
+      <option>Julián Torres</option>
+    </select>
+  </section>
+
+  <!-- BOTON FINAL -->
+  <section class="card full-width">
+    <div class="actions">
+      <button type="button" id="btn-enviar" class="btn-success" style="width:100%;padding:16px;">
+        Generar PDF y Enviar
+      </button>
+    </div>
+    <div id="status" class="toast"></div>
+  </section>
+
+</form>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
