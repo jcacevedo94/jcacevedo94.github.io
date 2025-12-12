@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Reporte Técnico SAC</title>
   <link rel="stylesheet" href="style.css">
+
+  <!-- PDF -->
   <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 </head>
 
@@ -72,38 +74,23 @@
     <h2>Datos Generales de la Máquina</h2>
 
     <div class="row row-2">
-      <div>
-        <label>Tipo</label>
-        <input type="text" name="maq_tipo">
-      </div>
-      <div>
-        <label>Marca</label>
-        <input type="text" name="maq_marca">
-      </div>
+      <div><label>Tipo</label><input type="text" name="maq_tipo"></div>
+      <div><label>Marca</label><input type="text" name="maq_marca"></div>
     </div>
 
     <div class="row row-2">
-      <div>
-        <label>Modelo</label>
-        <input type="text" name="maq_modelo">
-      </div>
-      <div>
-        <label>Serial</label>
-        <input type="text" name="maq_serial">
-      </div>
+      <div><label>Modelo</label><input type="text" name="maq_modelo"></div>
+      <div><label>Serial</label><input type="text" name="maq_serial"></div>
     </div>
 
     <div class="row row-2">
-      <div>
-        <label>Año</label>
-        <input type="number" name="maq_ano">
-      </div>
+      <div><label>Año</label><input type="number" name="maq_ano"></div>
     </div>
   </section>
 
-  <!-- BLOQUES TÉCNICOS POR TIPO DE SERVICIO -->
-
-  <!-- PREVENTIVO -->
+  <!-- =========================================================
+       PESTAÑA PREVENTIVO
+  ============================================================ -->
   <div id="tab-preventivo" class="tab-block hidden">
     <h3>Mantenimiento Preventivo</h3>
 
@@ -113,16 +100,18 @@
       <div><label>Temperatura</label><input type="number" name="prev_temp"></div>
       <div><label>Voltaje</label><input type="number" name="prev_voltaje"></div>
     </div>
+
     <div class="row row-3">
       <div><label>Corriente</label><input type="number" name="prev_corriente"></div>
       <div><label>RPM</label><input type="number" name="prev_rpm"></div>
       <div><label>Horas Totales</label><input type="number" name="prev_hrs_tot"></div>
     </div>
+
     <div class="row row-2">
-      <div><label>Horas en carga</label><input type="number" name="prev_hrs_carga"></div>
+      <div><label>Horas en Carga</label><input type="number" name="prev_hrs_carga"></div>
     </div>
 
-    <h4>Componentes reemplazados</h4>
+    <h4>Componentes Reemplazados</h4>
     <div class="check-list">
       <label><input type="checkbox" name="prev_filtro_aire"> Filtro aire</label>
       <label><input type="checkbox" name="prev_filtro_aceite"> Filtro aceite</label>
@@ -136,11 +125,13 @@
       <label><input type="checkbox" name="prev_electronicos"> Electrónicos</label>
     </div>
 
-    <h4>Notas adicionales</h4>
+    <h4>Notas</h4>
     <textarea name="prev_notas"></textarea>
   </div>
 
-  <!-- CORRECTIVO -->
+  <!-- =========================================================
+       CORRECTIVO
+  ============================================================ -->
   <div id="tab-correctivo" class="tab-block hidden">
     <h3>Mantenimiento Correctivo</h3>
 
@@ -150,16 +141,17 @@
       <div><label>Temperatura</label><input type="number" name="corr_temp"></div>
       <div><label>Voltaje</label><input type="number" name="corr_voltaje"></div>
     </div>
+
     <div class="row row-3">
       <div><label>Corriente</label><input type="number" name="corr_corriente"></div>
       <div><label>RPM</label><input type="number" name="corr_rpm"></div>
       <div><label>Horas Totales</label><input type="number" name="corr_hrs_tot"></div>
     </div>
 
-    <h4>Falla reportada</h4>
+    <h4>Falla Reportada</h4>
     <textarea name="corr_falla"></textarea>
 
-    <h4>Reparación realizada</h4>
+    <h4>Reparación Realizada</h4>
     <textarea name="corr_reparacion"></textarea>
 
     <h4>Componentes reemplazados</h4>
@@ -176,7 +168,7 @@
       <label><input type="checkbox" name="corr_electronicos"> Electrónicos</label>
     </div>
 
-    <h4>Detalles específicos</h4>
+    <h4>Detalles</h4>
     <label>Válvulas reemplazadas</label>
     <input type="text" name="corr_valvulas_det">
 
@@ -193,7 +185,9 @@
     <textarea name="corr_notas"></textarea>
   </div>
 
-  <!-- DIAGNOSTICO -->
+  <!-- =========================================================
+       DIAGNOSTICO
+  ============================================================ -->
   <div id="tab-diagnostico" class="tab-block hidden">
     <h3>Diagnóstico</h3>
 
@@ -203,6 +197,7 @@
       <div><label>Temperatura</label><input type="number" name="diag_temp"></div>
       <div><label>Voltaje</label><input type="number" name="diag_voltaje"></div>
     </div>
+
     <div class="row row-3">
       <div><label>Corriente</label><input type="number" name="diag_corriente"></div>
       <div><label>RPM</label><input type="number" name="diag_rpm"></div>
@@ -216,7 +211,9 @@
     <textarea name="diag_recomendaciones"></textarea>
   </div>
 
-  <!-- SUMINISTROS -->
+  <!-- =========================================================
+       SUMINISTROS
+  ============================================================ -->
   <div id="tab-suministros" class="tab-block hidden">
     <h3>Suministros</h3>
     <div class="check-list">
@@ -235,10 +232,10 @@
     <textarea name="sum_notas"></textarea>
   </div>
 
-  <!-- FOTOGRAFÍAS -->
+  <!-- FOTOS -->
   <section class="card full-width">
     <h2>Fotografías</h2>
-    <input type="file" id="fotos" multiple accept="image/*"/>
+    <input type="file" id="fotos" multiple accept="image/*">
     <div id="thumbs"></div>
   </section>
 
@@ -268,7 +265,7 @@
     </select>
   </section>
 
-  <!-- BOTON FINAL -->
+  <!-- BOTON -->
   <section class="card full-width">
     <div class="actions">
       <button type="button" id="btn-enviar" class="btn-success" style="width:100%;padding:16px;">
